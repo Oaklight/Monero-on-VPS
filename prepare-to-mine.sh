@@ -9,6 +9,7 @@ yum install git make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libu
 
 # add 3rd-party repo for i686 build scl
 yum-config-manager --add-repo https://copr.fedorainfracloud.org/coprs/mlampe/devtoolset-7/repo/epel-6/mlampe-devtoolset-7-epel-6.repo
+yum install devtoolset-7-toolchain
 scl enable devtoolset-7
 
 # on 64-bit platform
@@ -16,13 +17,15 @@ scl enable devtoolset-7
 mkdir dependencies && cd $_
 
 # install libuv dependency
+# dependency existance check first
+# ldconfig -p | grep libuv
 git clone https://github.com/libuv/libuv.git || true
 
 cd libuv
 sh autogen.sh
 ./configure
 make
-make check
+# make check
 make install
 cd ..
 
@@ -34,7 +37,7 @@ cd xmrig
 sed -i 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
 
 mkdir -p build && cd $_
-cmake .. -DCMAKE_BUILD_TYPE=Release
+cmake -DCMAKE_BUILD_TYPE=Release -DWITH_HTTPD=OFF ../
 make
 
 mv xmrig ../../../xmrig
