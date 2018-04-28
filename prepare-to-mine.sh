@@ -23,16 +23,21 @@ sh autogen.sh
 make
 make check
 make install
+cd ..
 
 # install xmrig
 git clone https://github.com/xmrig/xmrig.git || true
 
 cd xmrig
-
-# need to reset the contribution to 0
+# reset the contribution to 0
 sed 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
 
-mkdir -p build
-cd build
+mkdir -p build && cd $_
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
+cd ../..
+
+ln -sf xmrig-miner xmrig/build/xmrig
+# create config file
+touch config.json
+
