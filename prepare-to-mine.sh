@@ -13,6 +13,7 @@ scl enable devtoolset-7
 
 # on 64-bit platform
 #
+mkdir dependencies && cd $_
 
 # install libuv dependency
 git clone https://github.com/libuv/libuv.git || true
@@ -35,9 +36,12 @@ sed 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
 mkdir -p build && cd $_
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
-cd ../..
 
-ln -sf xmrig-miner xmrig/build/xmrig
 # create config file
 touch config.json
+cd ../..
 
+cd ..
+
+ln -sf dependencies/xmrig/build/xmrig
+ln -sf dependencies/xmrig/build/config.json
