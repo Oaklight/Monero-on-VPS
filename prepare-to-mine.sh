@@ -40,5 +40,6 @@ make
 mv xmrig ../../../xmrig
 cd ../../..
 
+rm -rf dependencies/
 # create config file
 touch config.json
