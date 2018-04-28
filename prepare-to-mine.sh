@@ -31,7 +31,7 @@ git clone https://github.com/xmrig/xmrig.git || true
 
 cd xmrig
 # reset the contribution to 0
-sed 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
+sed -i 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
 
 mkdir -p build && cd $_
 cmake .. -DCMAKE_BUILD_TYPE=Release
