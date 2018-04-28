@@ -30,5 +30,6 @@ git clone https://github.com/xmrig/xmrig.git || true
 cd xmrig
 mkdir -p build
 cd build
+# need to reset the contribution to 0
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
