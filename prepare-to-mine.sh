@@ -37,11 +37,8 @@ mkdir -p build && cd $_
 cmake .. -DCMAKE_BUILD_TYPE=Release
 make
 
+mv xmrig ../../../xmrig
+cd ../../..
+
 # create config file
 touch config.json
-cd ../..
-
-cd ..
-
-ln -sf dependencies/xmrig/build/xmrig
-ln -sf dependencies/xmrig/build/config.json
