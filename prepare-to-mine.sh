@@ -7,7 +7,7 @@ yum install git make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libu
 # add 3rd-party repo for i686 build scl
 yum-config-manager --add-repo https://copr.fedorainfracloud.org/coprs/mlampe/devtoolset-7/repo/epel-6/mlampe-devtoolset-7-epel-6.repo
 yum install devtoolset-7-toolchain
-scl enable devtoolset-7
+scl enable devtoolset-7 bash
 
 # on 64-bit platform
 #
