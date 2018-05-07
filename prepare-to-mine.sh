@@ -18,9 +18,9 @@ mkdir - p dependencies && cd $_
 # dependency existance check first
 # ldconfig -p | grep libuv
 wget https://github.com/libuv/libuv/archive/v1.x.zip
-unzip master.zip
-rm master.zip
-cd libuv-master
+unzip v1.x.zip
+rm v1.x.zip
+cd libuv-1.x
 # build and install libuv
 sh autogen.sh
 ./configure
@@ -28,7 +28,7 @@ make
 # make check
 make install
 cd ..
-rm libuv-master -rf
+rm libuv-1.x -rf
 
 # install xmrig
 wget https://github.com/xmrig/xmrig/archive/master.zip
