@@ -12,7 +12,7 @@ scl enable devtoolset-7 bash
 # on 64-bit platform
 #
 
-mkdir - p dependencies && cd $_
+mkdir -p dependencies && cd $_
 
 # install libuv dependency
 # dependency existance check first
