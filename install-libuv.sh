@@ -1,4 +1,5 @@
 # ldconfig -p | grep libuv
+yum install -y automake libtool
 wget https://github.com/libuv/libuv/archive/v1.x.zip
 unzip v1.x.zip; rm $_ -f
 cd libuv-1.x
@@ -9,4 +10,4 @@ make
 # make check
 make install
 cd .. # @ Monero-on-VPS/deps
-rm libuv-1.x -rf
+# rm libuv-1.x -rf
