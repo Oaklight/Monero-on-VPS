@@ -43,6 +43,7 @@ echo ""
 echo "Current system is $OS"
 echo ""
 
+yum update -y
 yum install -y epel-release
 yum install -y git make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libuv-static
 # install yum-utils for yum-config-manager
@@ -63,10 +64,10 @@ fi
 scl enable devtoolset-7 bash
 
 # download and build dependencies
-mkdir -p dependencies && cd $_
-# install libuv dependency
+mkdir -p deps && cd $_ # @ Monero-on-VPS/deps
 
 # dependency existance check first
+# incoming features
 
 # ldconfig -p | grep libuv
 wget https://github.com/libuv/libuv/archive/v1.x.zip
@@ -78,7 +79,7 @@ sh autogen.sh
 make
 # make check
 make install
-cd ..
+cd .. # @ Monero-on-VPS/deps
 rm libuv-1.x -rf
 
 if [[ $proxyOn ]]; then
@@ -88,11 +89,13 @@ if [[ $proxyOn ]]; then
     unzip master.zip
     rm $_ -f
     cd xmrig-proxy-master
-    mkdir -p build && cd $_
+    mkdir -p build && cd $_ # @ Monero-on-VPS/deps/xmrig-proxy-master/build
     cmake -DCMAKE_BUILD_TYPE=Release ../
     make
-    mkdir ../../../xmrig-proxy-executable
-    mv xmrig-proxy ../../../xmrig-proxy-executable/
+    mkdir ../../../xmrig-proxy
+    mv xmrig-proxy ../../../xmrig-proxy/
+    # create config file
+    touch ../../../xmrig-proxy/config.json
     cd ../../..
 fi
 
@@ -104,16 +107,15 @@ if [[ $minerOn ]]; then
     cd xmrig-master
     # reset the donate-level to 0
     sed -i 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
-    # build xmrig
     mkdir -p build && cd $_
     cmake -DCMAKE_BUILD_TYPE=Release -DWITH_HTTPD=OFF ../
     make
-    # copy the build to outer folder
-    mkdir ../../../xmrig-executable
-    mv xmrig ../../../xmrig-executable/
+    mkdir ../../../xmrig
+    mv xmrig ../../../xmrig/
+    # create config file
+    touch ../../../xmrig/config.json
     cd ../../..
 fi
 
-rm dependencies/ -rf
-# # create config file
-# touch config.json
+rm deps/ -rf
+
