@@ -61,61 +61,27 @@ else
     echo "incoming feature"
     exit 1
 fi
-scl enable devtoolset-7 bash
+# scl enable devtoolset-7 bash
 
-# download and build dependencies
-mkdir -p deps && cd $_ # @ Monero-on-VPS/deps
+mkdir -p deps && cd $_
+
+chmod 100 ../install-libuv.sh; mv $_ ./
+chmod 100 ../install-xmrig.sh; mv $_ ./
+chmod 100 ../install-proxy.sh; mv $_ ./
 
 # dependency existance check first
 # incoming features
 
-# ldconfig -p | grep libuv
-wget https://github.com/libuv/libuv/archive/v1.x.zip
-unzip v1.x.zip; rm $_ -f
-cd libuv-1.x
-# build and install libuv
-sh autogen.sh
-./configure
-make
-# make check
-make install
-cd .. # @ Monero-on-VPS/deps
-rm libuv-1.x -rf
-
-if [[ $proxyOn ]]; then
-    # install for proxy: xmrig-proxy
-    yum install -y libuuid libuuid-devel
-    wget https://github.com/xmrig/xmrig-proxy/archive/master.zip
-    unzip master.zip
-    rm $_ -f
-    cd xmrig-proxy-master
-    mkdir -p build && cd $_ # @ Monero-on-VPS/deps/xmrig-proxy-master/build
-    cmake -DCMAKE_BUILD_TYPE=Release ../
-    make
-    mkdir ../../../xmrig-proxy
-    mv xmrig-proxy ../../../xmrig-proxy/
-    # create config file
-    touch ../../../xmrig-proxy/config.json
-    cd ../../..
-fi
+scl enable devtoolset-7 "./install-libuv.sh" &
 
 if [[ $minerOn ]]; then
-    # install for miner: xmrig
-    wget https://github.com/xmrig/xmrig/archive/master.zip
-    unzip master.zip
-    rm $_ -f
-    cd xmrig-master
-    # reset the donate-level to 0
-    sed -i 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
-    mkdir -p build && cd $_
-    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_HTTPD=OFF ../
-    make
-    mkdir ../../../xmrig
-    mv xmrig ../../../xmrig/
-    # create config file
-    touch ../../../xmrig/config.json
-    cd ../../..
+    scl enable devtoolset-7 "./install-xmrig.sh" &
 fi
 
+if [[ $proxyOn ]]; then
+    scl enable devtoolset-7 "./install-proxy.sh" &
+fi
+
+cd ../
 rm deps/ -rf
 
