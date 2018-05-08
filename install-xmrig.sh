@@ -12,4 +12,5 @@ mkdir ../../../xmrig
 mv xmrig ../../../xmrig/
 # create config file
 touch ../../../xmrig/config.json
+echo "# config file for xmrig" > $_
 cd ../../

@@ -11,4 +11,5 @@ mkdir ../../../xmrig-proxy
 mv xmrig-proxy ../../../xmrig-proxy/
 # create config file
 touch ../../../xmrig-proxy/config.json
+echo "# config file for xmrig-proxy" > $_
 cd ../../

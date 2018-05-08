@@ -57,11 +57,11 @@ OS=$(uname -m)
 echo "Current system is $OS"
 echo ""
 # install yum-utils for yum-config-manager
-yum install -y -q yum-utils
+yum install -y -q yum-utils cmake unzipg
 if [[ $OS = "i686" ]]; then # on 32-bit platform
     # yum update -y
     yum install -y -q epel-release
-    yum install -y -q make cmake gcc gcc-c++ libstdc++-static
+    yum install -y -q make gcc gcc-c++ libstdc++-static
     # add 3rd-party repo for i686 build scl
     yum-config-manager --add-repo https://copr.fedorainfracloud.org/coprs/mlampe/devtoolset-7/repo/epel-6/mlampe-devtoolset-7-epel-6.repo
     yum install -y -q  devtoolset-7-toolchain
@@ -96,5 +96,7 @@ if [[ $proxyOn ]]; then
 fi
 
 cd ../
+nano ./xmrig/config.json
+nano ./xmrig-proxy/config.json
 # rm deps/ -rf
 
