@@ -45,7 +45,7 @@ echo ""
 
 # yum update -y
 yum install -y epel-release
-yum install -y git automake make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libuv-static
+yum install -y git make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libuv-static
 # install yum-utils for yum-config-manager
 yum install -y yum-utils
 
