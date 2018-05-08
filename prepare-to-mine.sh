@@ -46,7 +46,7 @@ read -p "Do you need to access the miner or proxy to view the status?
 1) Yes, please
 Your choice: " server
 echo ""
-if [[ $server ]]; then
+if [[ $server = 1]]; then
     yum install -y -q libmicrohttpd-devel
 fi
 
@@ -87,11 +87,11 @@ chmod 100 ../install-proxy.sh; mv $_ ./
 
 scl enable devtoolset-7 "./install-libuv.sh"
 
-if [[ $minerOn ]]; then
+if [[ $minerOn = 1]]; then
     scl enable devtoolset-7 "./install-xmrig.sh"
 fi
 
-if [[ $proxyOn ]]; then
+if [[ $proxyOn = 1]]; then
     scl enable devtoolset-7 "./install-proxy.sh"
 fi
 
