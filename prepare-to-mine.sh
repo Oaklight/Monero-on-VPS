@@ -1,25 +1,76 @@
-# install yum-utils for yum-config-manager
-yum install yum-utils
+# select mode for miner, proxy, or both
+read -p "Modes for installation:
+ 1) miner-only
+ 2) proxy-only
+ 3) miner-and-proxy
+Your choice: " mode
+
+proxyOn=0
+minerOn=0
+
+case $mode in
+1) echo "Installation for miner only!"
+    minerOn=1
+    ;;
+2) echo "Installation for proxy only!"
+    proxyOn=1
+    ;;
+3) echo "Installation for both miner and proxy!"
+    proxyOn=1
+    minerOn=1
+    ;;
+*) echo "Invalid input, pls check again"
+    exit 0
+    ;;
+esac
+
 # install centos devtoolset-7 and set active
-yum install  epel-release
-yum install git make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libuv-static
-# on 32-bit platform
-# add 3rd-party repo for i686 build scl
-yum-config-manager --add-repo https://copr.fedorainfracloud.org/coprs/mlampe/devtoolset-7/repo/epel-6/mlampe-devtoolset-7-epel-6.repo
-yum install devtoolset-7-toolchain
+read -p "Should devtoolset-7 be added to .bash_profile?
+1) Yes, for-ever
+0) No, for now
+Your choice: " always
+if [[ $always ]]; then
+    echo "Enable devtoolset-7 forever"
+    echo "scl enable devtoolset-7 bash" > ~/.bash_profile
+else
+    echo "Enable devtoolset-7 for now"
+    sed -i 's/scl enable devtoolset-7 bash//1' ~/.bash_profile
+fi
+
+# check platform version: i686 or x86_64
+OS=$(uname -m)
+echo ""
+echo "Current system is $OS"
+echo ""
+
+yum install -y epel-release
+yum install -y git make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libuv-static
+# install yum-utils for yum-config-manager
+yum install -y yum-utils
+
+if [[ $OS = "i686" ]]; then # on 32-bit platform
+    # add 3rd-party repo for i686 build scl
+    yum-config-manager --add-repo https://copr.fedorainfracloud.org/coprs/mlampe/devtoolset-7/repo/epel-6/mlampe-devtoolset-7-epel-6.repo
+    yum install -y devtoolset-7-toolchain
+elif [[ $OS = "x86_64" ]]; then # on 64-bit platform
+    yum install -y centos-release-scl
+    yum-config-manager --enable rhel-server-rhscl-7-rpms
+    yum install -y devtoolset-7
+else
+    echo "incoming feature"
+    exit 1
+fi
 scl enable devtoolset-7 bash
 
-# on 64-bit platform
-#
-
+# download and build dependencies
 mkdir -p dependencies && cd $_
-
 # install libuv dependency
+
 # dependency existance check first
+
 # ldconfig -p | grep libuv
 wget https://github.com/libuv/libuv/archive/v1.x.zip
-unzip v1.x.zip
-rm v1.x.zip
+unzip v1.x.zip; rm $_ -f
 cd libuv-1.x
 # build and install libuv
 sh autogen.sh
@@ -30,21 +81,39 @@ make install
 cd ..
 rm libuv-1.x -rf
 
-# install xmrig
-wget https://github.com/xmrig/xmrig/archive/master.zip
-unzip master.zip
-rm master.zip
-cd xmrig-master
-# reset the donate-level to 0
-sed -i 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
-# build xmrig
-mkdir -p build && cd $_
-cmake -DCMAKE_BUILD_TYPE=Release -DWITH_HTTPD=OFF ../
-make
-# copy the build to outer folder
-mv xmrig ../../../xmrig
-cd ../../..
+if [[ $proxyOn ]]; then
+    # install for proxy: xmrig-proxy
+    yum install -y libuuid libuuid-devel
+    wget https://github.com/xmrig/xmrig-proxy/archive/master.zip
+    unzip master.zip
+    rm $_ -f
+    cd xmrig-proxy-master
+    mkdir -p build && cd $_
+    cmake -DCMAKE_BUILD_TYPE=Release ../
+    make
+    mkdir ../../../xmrig-proxy-executable
+    mv xmrig-proxy ../../../xmrig-proxy-executable/
+    cd ../../..
+fi
 
-rm -rf dependencies/
-# create config file
-touch config.json
+if [[ $minerOn ]]; then
+    # install for miner: xmrig
+    wget https://github.com/xmrig/xmrig/archive/master.zip
+    unzip master.zip
+    rm $_ -f
+    cd xmrig-master
+    # reset the donate-level to 0
+    sed -i 's/kDonateLevel = 5/kDonateLevel = 0/1' src/donate.h
+    # build xmrig
+    mkdir -p build && cd $_
+    cmake -DCMAKE_BUILD_TYPE=Release -DWITH_HTTPD=OFF ../
+    make
+    # copy the build to outer folder
+    mkdir ../../../xmrig-executable
+    mv xmrig ../../../xmrig-executable/
+    cd ../../..
+fi
+
+rm dependencies/ -rf
+# # create config file
+# touch config.json
