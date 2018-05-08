@@ -57,18 +57,18 @@ OS=$(uname -m)
 echo "Current system is $OS"
 echo ""
 # install yum-utils for yum-config-manager
-yum install -y -q yum-utils cmake unzipg
+yum install -y -q yum-utils unzip
 if [[ $OS = "i686" ]]; then # on 32-bit platform
     # yum update -y
     yum install -y -q epel-release
     yum install -y -q make gcc gcc-c++ libstdc++-static
     # add 3rd-party repo for i686 build scl
     yum-config-manager --add-repo https://copr.fedorainfracloud.org/coprs/mlampe/devtoolset-7/repo/epel-6/mlampe-devtoolset-7-epel-6.repo
-    yum install -y -q  devtoolset-7-toolchain
+    yum install -y -q  devtoolset-7-toolchain cmake
 elif [[ $OS = "x86_64" ]]; then # on 64-bit platform
     yum install -y -q centos-release-scl
     yum-config-manager --enable rhel-server-rhscl-7-rpms
-    yum install -y -q devtoolset-7
+    yum install -y -q devtoolset-7 cmake 
 else
     echo "incoming feature"
     exit 1
