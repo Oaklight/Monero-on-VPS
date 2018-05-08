@@ -43,7 +43,7 @@ echo ""
 echo "Current system is $OS"
 echo ""
 
-yum update -y
+# yum update -y
 yum install -y epel-release
 yum install -y git make cmake gcc gcc-c++ libstdc++-static libmicrohttpd-devel libuv-static
 # install yum-utils for yum-config-manager
@@ -72,16 +72,16 @@ chmod 100 ../install-proxy.sh; mv $_ ./
 # dependency existance check first
 # incoming features
 
-scl enable devtoolset-7 "./install-libuv.sh" &
+scl enable devtoolset-7 "./install-libuv.sh"
 
 if [[ $minerOn ]]; then
-    scl enable devtoolset-7 "./install-xmrig.sh" &
+    scl enable devtoolset-7 "./install-xmrig.sh"
 fi
 
 if [[ $proxyOn ]]; then
-    scl enable devtoolset-7 "./install-proxy.sh" &
+    scl enable devtoolset-7 "./install-proxy.sh"
 fi
 
 cd ../
-rm deps/ -rf
+# rm deps/ -rf
 
