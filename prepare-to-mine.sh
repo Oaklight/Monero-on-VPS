@@ -4,7 +4,6 @@ read -p "Modes for installation:
  2) proxy-only
  3) miner-and-proxy
 Your choice: " mode
-echo ""
 case $mode in
 1) echo "Installation for miner only!"
     minerOn=1
@@ -22,13 +21,13 @@ case $mode in
     exit 0
     ;;
 esac
+echo ""
 
 # install centos devtoolset-7 and set active
 read -p "Should devtoolset-7 be added to .bash_profile?
 0) No, for now
 1) Yes, for-ever
 Your choice: " always
-echo ""
 case $always in
 0) echo "Enable devtoolset-7 for now"
     sed -i 's/scl enable devtoolset-7 bash//1' ~/.bash_profile
@@ -40,15 +39,16 @@ case $always in
     exit 0
     ;;
 esac
+echo ""
 
 read -p "Do you need to access the miner or proxy to view the status?
 0) No, I don't
 1) Yes, please
 Your choice: " server
-echo ""
 if [[ $server = "1" ]]; then
     yum install -y -q libmicrohttpd-devel
 fi
+echo ""
 
 # yum update -y
 
