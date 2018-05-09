@@ -30,7 +30,6 @@ Scripts will be updated from time to time. If you have questions, feel free to k
 ## Donations
 Consider donate me a cup of coffee if this helps you.
 
-XMR: '''47R4NhPAB1PStDtC5kPeNEHqR1NZCf5TFDLLYggyHmLvBwXpxzmYF9QUGAA9sGkuFd3CjtQuakWbXULQ3eJcpsK6BeB5zev
-'''
+XMR: ```47R4NhPAB1PStDtC5kPeNEHqR1NZCf5TFDLLYggyHmLvBwXpxzmYF9QUGAA9sGkuFd3CjtQuakWbXULQ3eJcpsK6BeB5zev```
 
-BTC: '''1MAzbgTrHp74KguJ8G7YYaic8bS7yDFprb'''
+BTC: ```1MAzbgTrHp74KguJ8G7YYaic8bS7yDFprb```
