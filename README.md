@@ -2,7 +2,7 @@
 Mining Monero using clusters of cheap VPS (5 to 15 USD / yr or so) is an **experimental** project. </br>
 Not all VPS suppliers agree with this, be careful with **High CPU Abusation.**
 
-This project can ease your way to setup Miner or Miner-Proxy or both on either i686 or x86_64 platform VPS **(CentOS only for now)**. </br>
+This project can ease your way to setup Miner or Miner-Proxy or both on either **i686** or **x86_64** platform VPS **(CentOS only for now)**. </br>
 The current version only support **cpu version** rigger. GPU version may not be considered since I don't have such ones.
 
 ****
