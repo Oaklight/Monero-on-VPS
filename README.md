@@ -15,7 +15,7 @@ The current version only support **cpu version** rigger. GPU version may not be 
 ## Other information
 **config.json** for xmrig and xmrig-proxy via [xmrig_config](https://config.xmrig.com/)
 
-Default donation 0 for both xmrig and xmrig-proxy. :)
+Default donation 0 for both xmrig and xmrig-proxy. :satisfied::satisfied::satisfied:
 
 Scripts will be updated from time to time. If you have questions, feel free to kick off an issue.
 
