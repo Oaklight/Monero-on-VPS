@@ -22,8 +22,8 @@ Scripts will be updated from time to time. If you have questions, feel free to k
 ****
 
 ## **Suggestions:**
-1.  Activate **nicehash**, **keepalive**, maybe **fixed-diff** at proxy side, miner side should be adjust accordingly.
-2.  wisely choose a pool with **port for low-end machine** (most cheap VPS are also poor equipped) if you only have very few number of cheap VPS;
+1.  Activate **nicehash**, **keepalive**, maybe **fixed-diff** at proxy side, miner side should be adjusted accordingly.
+2.  wisely choose a pool with **port for low-end machine** (most cheap VPS are also poorly equipped) if you only have very few number of cheap VPS;
 3.  ``keep-it-run.sh'' spins to prevent xmrig from bad-connection-caused suspension.
 
 ****
